@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,5 +21,13 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+Route::get('/user/subscribe', function (Request $request) {
+    $payLink = $request->user()->newSubscription('default', $premium = 15821)
+        ->returnTo(route('dashboard'))
+        ->create();
+
+    return view('billing', ['payLink' => $payLink]);
+});
 
 require __DIR__.'/auth.php';
