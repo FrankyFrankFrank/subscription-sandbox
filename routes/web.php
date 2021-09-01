@@ -23,11 +23,17 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::get('/user/subscribe', function (Request $request) {
-    $payLink = $request->user()->newSubscription('default', $premium = 15821)
+    $payLink = $request->user()->newSubscription('subtwo', $premium = 15822)
         ->returnTo(route('dashboard'))
         ->create();
 
     return view('billing', ['payLink' => $payLink]);
 });
+
+Route::get('/user', function (Request $request) {
+    $subscription = $request->user()->subscription('subtwo');
+
+    return view('user', ['subscription' => $subscription]);
+})->name('user');
 
 require __DIR__.'/auth.php';
