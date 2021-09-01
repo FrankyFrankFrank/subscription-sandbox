@@ -36,4 +36,12 @@ Route::get('/user', function (Request $request) {
     return view('user', ['subscription' => $subscription]);
 })->name('user');
 
+Route::patch('/subscription/pause', function (Request $request) {
+    $subscription = $request->user()->subscription('subtwo');
+
+    $subscription->pause();
+
+    return redirect()->route('user');
+})->name('pause');
+
 require __DIR__.'/auth.php';
